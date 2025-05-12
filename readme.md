@@ -2,7 +2,8 @@
 
 O **Oráculo** é um assistente de inteligência artificial multimodal, capaz de analisar conteúdo de diversas fontes (sites, PDFs, arquivos TXT, CSV e vídeos do YouTube) e responder de forma contextualizada e interativa através de uma interface criada com Streamlit.
 
-![Screenshot](./docs/oraculo_screenshot.png)
+![Oraculo Screenshot](assets/oraculo.png)
+
 
 ## ✨ Funcionalidades
 
