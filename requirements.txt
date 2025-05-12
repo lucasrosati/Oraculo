@@ -3,9 +3,16 @@ langchain==0.3.0
 langchain-community==0.3.0
 langchain-groq==0.2.0
 langchain-openai==0.2.0
-python-dotenv==1.0.1
+
+# Loaders e utilitários
 beautifulsoup4==4.12.3
 pypdf==5.0.0
 unstructured==0.15.13
 fake_useragent==1.5.1
 youtube_transcript_api==0.6.2
+
+# Suporte a arquivos CSV/TXT
+pandas>=2.2.0
+
+# Suporte a variáveis de ambiente (se for usar .env futuramente)
+python-dotenv==1.0.1

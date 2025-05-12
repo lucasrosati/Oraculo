@@ -1,12 +1,14 @@
 import os
 from time import sleep
 import streamlit as st
-from langchain_community.document_loaders import (WebBaseLoader,
-                                                  YoutubeLoader, 
-                                                  CSVLoader, 
-                                                  PyPDFLoader, 
-                                                  TextLoader)
 from fake_useragent import UserAgent
+from langchain_community.document_loaders import (
+    WebBaseLoader,
+    YoutubeLoader,
+    CSVLoader,
+    PyPDFLoader,
+    TextLoader
+)
 
 def carrega_site(url):
     documento = ''
@@ -17,34 +19,46 @@ def carrega_site(url):
             lista_documentos = loader.load()
             documento = '\n\n'.join([doc.page_content for doc in lista_documentos])
             break
-        except:
-            print(f'Erro ao carregar o site {i+1}')
+        except Exception as e:
+            print(f'Erro ao carregar o site {i+1}: {e}')
             sleep(3)
-    if documento == '':
-        st.error('Não foi possível carregar o site')
+    if not documento:
+        st.error('❌ Não foi possível carregar o site após múltiplas tentativas.')
         st.stop()
     return documento
 
 def carrega_youtube(video_id):
-    loader = YoutubeLoader(video_id, add_video_info=False, language=['pt'])
-    lista_documentos = loader.load()
-    documento = '\n\n'.join([doc.page_content for doc in lista_documentos])
-    return documento
+    try:
+        loader = YoutubeLoader(video_id=video_id, add_video_info=False, language=['pt'])
+        documentos = loader.load()
+        return '\n\n'.join([doc.page_content for doc in documentos])
+    except Exception as e:
+        st.error(f'❌ Erro ao carregar o vídeo do YouTube: {e}')
+        st.stop()
 
 def carrega_csv(caminho):
-    loader = CSVLoader(caminho)
-    lista_documentos = loader.load()
-    documento = '\n\n'.join([doc.page_content for doc in lista_documentos])
-    return documento
+    try:
+        loader = CSVLoader(file_path=caminho)
+        documentos = loader.load()
+        return '\n\n'.join([doc.page_content for doc in documentos])
+    except Exception as e:
+        st.error(f'❌ Erro ao carregar CSV: {e}')
+        st.stop()
 
 def carrega_pdf(caminho):
-    loader = PyPDFLoader(caminho)
-    lista_documentos = loader.load()
-    documento = '\n\n'.join([doc.page_content for doc in lista_documentos])
-    return documento
+    try:
+        loader = PyPDFLoader(file_path=caminho)
+        documentos = loader.load()
+        return '\n\n'.join([doc.page_content for doc in documentos])
+    except Exception as e:
+        st.error(f'❌ Erro ao carregar PDF: {e}')
+        st.stop()
 
 def carrega_txt(caminho):
-    loader = TextLoader(caminho)
-    lista_documentos = loader.load()
-    documento = '\n\n'.join([doc.page_content for doc in lista_documentos])
-    return documento
+    try:
+        loader = TextLoader(file_path=caminho)
+        documentos = loader.load()
+        return '\n\n'.join([doc.page_content for doc in documentos])
+    except Exception as e:
+        st.error(f'❌ Erro ao carregar TXT: {e}')
+        st.stop()
